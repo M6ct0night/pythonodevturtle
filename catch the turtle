@@ -1,0 +1,90 @@
+import turtle
+import random
+import time
+from random import randint
+
+# Ekran
+drawingBoard = turtle.Screen()
+drawingBoard.bgcolor("light blue")
+drawingBoard.title("catch the turtle")
+drawingBoard.screensize(400,400)
+
+# Kaplumbağa
+efet = turtle.Turtle()
+efet.shape("turtle")
+efet.color("green")
+efet.shapesize(2)
+efet.speed(10)
+# Kontrol fonksiyonları
+
+
+puan_gosterge = turtle.Turtle()
+puan_gosterge.hideturtle()
+puan_gosterge.penup()
+puan_gosterge.goto(-160, 200)
+
+
+
+sure= turtle.Turtle()
+sure.hideturtle()
+sure.penup()
+sure.goto(-160, 260)
+
+def puan_guncelle():
+    puan_gosterge.clear()  # Önceki yazıyı sil
+    puan_gosterge.write(f"score: {g}", font=("Arial", 16, "bold"))
+time=30
+g = 0
+def konum():
+    x = randint(-200,200)
+    y = randint(-200,200)
+    efet.goto(x, y)
+
+def degisim():
+    konum()
+    drawingBoard.ontimer(degisim, 1000)
+
+def tık(x, y):
+    konum()
+    global g
+    g += 1
+    puan_guncelle()
+    print(g)
+
+def score():
+    efet.write(g)
+
+def sayac():
+    global time
+    if time > 0:
+        time -= 1
+    else:
+        time="game over"
+        efet.hideturtle()
+        return
+        
+
+
+    drawingBoard.ontimer(sayac, 1000)
+
+def sayacguncel():
+    sure.clear()  # Önceki yazıyı sil
+    sure.write(f"time: {time}", font=("Arial", 16, "bold"))
+    drawingBoard.ontimer(sayacguncel, 1000)
+
+efet.penup()
+
+
+drawingBoard.listen()
+
+efet.onclick(tık)
+
+degisim()
+
+sayac()
+
+sayacguncel()
+
+
+
+turtle.mainloop()
